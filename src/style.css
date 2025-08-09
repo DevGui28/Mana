@@ -31,9 +31,12 @@ body {
   z-index: 1;
 }
 
+span{
+  color: red;
+}
+
 h1 {
   font-size: 2rem;
-  font-style: italic;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px #000;
 }
@@ -42,6 +45,11 @@ p {
   font-size: 1.1rem;
   text-shadow: 1px 1px 3px #000;
 }
+
+  .text{
+    color: #fcfcfc;
+    font-style: italic;
+  }
 
 img {
   width: 50%;
