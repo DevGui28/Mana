@@ -2,7 +2,7 @@ function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.top = window.innerHeight + "px";
+    heart.style.top = (window.innerHeight - 30) + "px"; // 🚀 30px acima do fim da tela
     heart.innerHTML = "❤";
     heart.style.fontSize = Math.random() * 20 + 15 + "px";
     document.body.appendChild(heart);

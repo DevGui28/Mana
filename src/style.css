@@ -5,14 +5,15 @@ body {
   background: linear-gradient(45deg, #ff9ac5, #ff6b81, #ff9ac5);
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
-  overflow: hidden; /* evita barra de rolagem */
+  overflow: hidden; /* 🚀 garante que não apareça scroll */
   color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 15px; /* espaço em telas pequenas */
+  height: 100vh; /* 🚀 trava altura no tamanho da tela */
+  padding: 15px;
 }
+
 
 @keyframes gradient {
   0% {background-position: 0% 50%;}
