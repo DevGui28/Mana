@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(45deg, #ff9ac5, #ff6b81, #ff9ac5);
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
+  overflow-x: hidden;
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 2rem;
+  font-style: italic;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+p {
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 3px #000;
+}
+
+img {
+  width: 50%;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.7);
+  border: 3px solid white;
+}
+
+.heart {
+  position: absolute;
+  color: red;
+  font-size: 20px;
+  animation: float 5s linear infinite;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% {transform: translateY(0) scale(1); opacity: 1;}
+  100% {transform: translateY(-800px) scale(1.5); opacity: 0;}
+}
