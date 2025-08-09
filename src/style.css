@@ -5,20 +5,27 @@ html, body {
   background: linear-gradient(45deg, #ff9ac5, #ff6b81, #ff9ac5);
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
-  overflow: hidden; /* mantém sem scroll geral */
   color: rgb(255, 255, 255);
+  min-height: 100vh;
+}
+
+body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   padding: 15px;
+  position: relative;
 }
 
-
-@keyframes gradient {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+/* Fundo fixo com corações */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  z-index: -1;
 }
 
 .card {
@@ -27,45 +34,32 @@ html, body {
   border-radius: 20px;
   padding: 30px;
   max-width: 500px;
+  width: 100%;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   position: relative;
   z-index: 1;
-  max-height: 90vh; /* impede que passe da tela */
-  overflow-y: auto; /* 🚀 rolagem interna se o texto for grande */
 }
 
-/* Evita barra de rolagem interna feia no celular */
-.card::-webkit-scrollbar {
-  width: 6px;
-}
-.card::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 3px;
-}
-
-span {
-  color: red;
-}
-
+/* Texto e título */
+span { color: red; }
 h1 {
   font-size: 2rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px #000;
 }
-
 p {
   font-size: 1.1rem;
   text-shadow: 1px 1px 3px #000;
 }
-
 .text {
   color: #fcfcfc;
   font-style: italic;
 }
 
+/* Imagem */
 img {
-  width: 80%; /* melhor para telas menores */
+  width: 80%;
   max-width: 300px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -73,12 +67,14 @@ img {
   border: 3px solid white;
 }
 
+/* Corações */
 .heart {
-  position: absolute;
+  position: fixed;
   color: red;
   font-size: 20px;
   animation: float 5s linear infinite;
   z-index: 0;
+  pointer-events: none;
 }
 
 @keyframes float {
@@ -86,27 +82,21 @@ img {
   100% {transform: translateY(-800px) scale(1.5); opacity: 0;}
 }
 
-/* Responsividade */
+/* Responsividade para tablets */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-  p {
-    font-size: 1rem;
-  }
-  img {
-    width: 90%;
-  }
+  h1 { font-size: 1.5rem; }
+  p { font-size: 1rem; }
+  img { width: 90%; }
 }
 
+/* Responsividade para celulares */
 @media (max-width: 480px) {
-  h1 {
-    font-size: 1.3rem;
+  body {
+    flex-direction: column;
+    align-items: stretch;
   }
-  p {
-    font-size: 0.95rem;
-  }
-  .card {
-    padding: 20px;
-  }
+  h1 { font-size: 1.3rem; }
+  p { font-size: 0.95rem; }
+  .card { padding: 20px; }
+  img { width: 100%; }
 }
