@@ -5,12 +5,13 @@ body {
   background: linear-gradient(45deg, #ff9ac5, #ff6b81, #ff9ac5);
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
-  overflow-x: hidden;
+  overflow: hidden; /* evita barra de rolagem */
   color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 15px; /* espaço em telas pequenas */
 }
 
 @keyframes gradient {
@@ -31,7 +32,7 @@ body {
   z-index: 1;
 }
 
-span{
+span {
   color: red;
 }
 
@@ -46,13 +47,14 @@ p {
   text-shadow: 1px 1px 3px #000;
 }
 
-  .text{
-    color: #fcfcfc;
-    font-style: italic;
-  }
+.text {
+  color: #fcfcfc;
+  font-style: italic;
+}
 
 img {
-  width: 50%;
+  width: 80%; /* melhor para telas menores */
+  max-width: 300px;
   border-radius: 15px;
   margin-bottom: 20px;
   box-shadow: 0 0 10px rgba(255,255,255,0.7);
@@ -70,4 +72,29 @@ img {
 @keyframes float {
   0% {transform: translateY(0) scale(1); opacity: 1;}
   100% {transform: translateY(-800px) scale(1.5); opacity: 0;}
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+  img {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  .card {
+    padding: 20px;
+  }
 }
