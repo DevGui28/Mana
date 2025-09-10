@@ -1,37 +1,194 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Aniversário Bujãozinho</title>
-    <link rel="stylesheet" href="src/style.css">
+    <title>Guarda-Roupa Solidário v2.0</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Nosso CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
 </head>
+<body class="bg-gray-100 text-gray-800">
 
-<body>
-    <div class="card">
-        <h1><span>❤</span> Feliz Aniversário,<br> Meu Bujãozinho! <span>❤</span></h1>
-        <img src="img/mana_2.jpg" alt="Foto com minha irmã">
-        <p class="text">
-            Hoje é um dia muito especial para mim, pois nesse dia você, minha irmã, chegou ao mundo para alegrar a vida
-            de todos à sua volta, e com o passar dos anos essa alegria só tem aumentado, esse dom de levar otimismo só
-            tem multiplicado, para a sorte dos que a conhecem.
-            <br>
-            Mais que uma irmã você tem se mostrado amiga e companheira, e com partilhar da sua existência é um grande
-            presente de Deus. Lembro-me das inúmeras vezes
-            que o seu sorriso preencheu o nosso lar, das palavras carinhosas que você me diz quando eu preciso ouvir.
-            <br>
-            Eu lhe agradeço por ser um exemplo tão lindo para todos que vivem ao seu redor, principalmente para mim, que
-            como sua irmã posso me orgulhar de tudo que você é. Saiba que sempre vou estar por perto para lhe estender a
-            mão quando sua caminhada se tornar difícil.
-            <br>
-            Nesse seu dia todo especial, quero lhe desejar toda felicidade do mundo, e que Deus a abençoe com muita paz
-            e saúde! Parabéns, que você tenha o melhor aniversário da sua vida!
-            <br>
-            Te amo demais! <span>❤</span>🎉
-        </p>
+    <!-- Container principal da aplicação -->
+    <div id="app" class="max-w-4xl mx-auto p-4 min-h-screen">
+        <!-- O conteúdo dinâmico será renderizado aqui pelo script.js -->
     </div>
-    <script src="src/script.js"></script>
-</body>
+    
+    <!-- Toast de notificação -->
+    <div id="toast" class="hidden fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg z-50 transition-transform transform translate-y-16 duration-300">
+        <p id="toast-message"></p>
+    </div>
 
+    <!-- #################### TEMPLATES DAS VIEWS #################### -->
+
+    <template id="login-view-template">
+        <div class="flex flex-col items-center justify-center min-h-screen">
+            <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-indigo-500 mb-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9.5 9 2 2 4-4"></path></svg>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Guarda-Roupa Solidário</h1>
+                <p class="text-gray-600 mb-8">Conectando doadores e quem precisa. Dê uma segunda vida às suas roupas.</p>
+                <div id="auth-form-container"></div>
+                <div id="auth-buttons">
+                    <button id="show-login-btn" class="w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-600 transition-all duration-300 mb-4 shadow-sm">Entrar</button>
+                    <button id="show-register-btn" class="w-full bg-gray-200 text-gray-700 font-semibold py-3 rounded-lg hover:bg-gray-300 transition-all duration-300">Criar Conta</button>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="auth-form-template">
+         <form id="auth-form" class="space-y-4 mb-4">
+            <h2 class="text-2xl font-semibold text-gray-700" id="form-title"></h2>
+            <input type="text" id="name" placeholder="Nome Completo" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+            <input type="email" id="email" placeholder="E-mail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+            <input type="password" id="password" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+            <div id="user-type-container" class="text-left">
+                <label class="block text-gray-600 mb-2 font-medium">Qual o seu objetivo?</label>
+                <div class="flex gap-4">
+                    <label class="flex-1"><input type="radio" name="userType" value="donor" class="sr-only peer" checked><div class="p-3 border-2 border-gray-300 rounded-lg cursor-pointer peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-600"><span class="font-semibold">Quero Doar</span></div></label>
+                    <label class="flex-1"><input type="radio" name="userType" value="recipient" class="sr-only peer"><div class="p-3 border-2 border-gray-300 rounded-lg cursor-pointer peer-checked:border-indigo-500 peer-checked:bg-indigo-50 peer-checked:text-indigo-600"><span class="font-semibold">Receber Doação</span></div></label>
+                </div>
+            </div>
+            <p id="auth-error" class="text-red-500 text-sm hidden"></p>
+            <button type="submit" id="auth-submit-btn" class="w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-600 transition-all duration-300 shadow-sm"></button>
+            <button type="button" id="back-to-auth-selection" class="w-full mt-2 text-gray-600 hover:text-indigo-500 font-medium">Voltar</button>
+        </form>
+    </template>
+    
+    <template id="donor-dashboard-template">
+        <div class="w-full">
+            <header class="flex justify-between items-center mb-8 pb-4 border-b">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Minhas Doações</h1>
+                    <p class="text-gray-600">Olá, <span id="user-name"></span>! Gerencie as roupas que você doou.</p>
+                </div>
+                 <div class="flex items-center gap-4">
+                     <button id="add-item-btn" class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-600 transition-all duration-300 shadow-sm flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Adicionar Peça
+                     </button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="text-gray-500 hover:text-indigo-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
+                        <span id="notifications-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"></span>
+                    </div>
+                    <button id="logout-btn" class="text-gray-500 hover:text-red-500 font-medium">Sair</button>
+                </div>
+            </header>
+            <div id="donations-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <p id="no-donations-message" class="text-center text-gray-500 mt-10 hidden">Você ainda não adicionou nenhuma peça para doação.</p>
+        </div>
+    </template>
+    
+    <template id="recipient-dashboard-template">
+        <div class="w-full">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-4 border-b">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-3xl font-bold text-gray-800">Peças Disponíveis</h1>
+                    <p class="text-gray-600">Olá, <span id="user-name"></span>! Encontre uma peça para você.</p>
+                </div>
+                <div class="flex items-center gap-4 w-full md:w-auto">
+                    <button id="my-requests-btn" class="bg-white border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-50 transition-all duration-300 flex-1 md:flex-auto">Meus Pedidos</button>
+                    <div class="relative">
+                        <button id="notifications-btn" class="text-gray-500 hover:text-indigo-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
+                        <span id="notifications-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"></span>
+                    </div>
+                    <button id="logout-btn" class="text-gray-500 hover:text-red-500 font-medium">Sair</button>
+                </div>
+            </header>
+            <div class="flex flex-col sm:flex-row gap-4 mb-6 p-4 bg-white rounded-lg shadow-sm">
+                <select id="filter-category" class="w-full sm:w-1/2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"><option value="">Todas as Categorias</option><option value="camisetas">Camisetas</option><option value="calcas">Calças</option><option value="vestidos">Vestidos</option><option value="casacos">Casacos</option><option value="calcados">Calçados</option><option value="outros">Outros</option></select>
+                <select id="filter-size" class="w-full sm:w-1/2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"><option value="">Todos os Tamanhos</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option></select>
+            </div>
+            <div id="items-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <p id="no-items-message" class="text-center text-gray-500 mt-10 hidden">Nenhuma peça disponível no momento. Volte mais tarde!</p>
+        </div>
+    </template>
+    
+    <!-- Modals -->
+    <div id="add-item-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 relative">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Adicionar Nova Peça</h2>
+            <form id="add-item-form" class="space-y-4">
+                 <input type="text" id="item-title" placeholder="Título da Peça (ex: Camisa de Algodão Azul)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+                 <div class="relative"><textarea id="item-description" placeholder="Descrição (cor, marca, detalhes...)" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required></textarea><button type="button" id="generate-ai-description" class="absolute bottom-3 right-3 bg-indigo-100 text-indigo-600 text-xs font-semibold py-1 px-2 rounded-md hover:bg-indigo-200 transition-all">✨ Gerar com IA</button></div>
+                 
+                 <div>
+                    <label for="item-image-upload" class="block text-sm font-medium text-gray-700 mb-2">Foto da Peça</label>
+                    <input type="file" id="item-image-upload" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
+                    <div id="upload-progress-container" class="w-full bg-gray-200 rounded-full h-2.5 mt-2 hidden"><div id="upload-progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div></div>
+                 </div>
+
+                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select id="item-category" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" required><option value="" disabled selected>Categoria</option><option value="camisetas">Camisetas</option><option value="calcas">Calças</option><option value="vestidos">Vestidos</option><option value="casacos">Casacos</option><option value="calcados">Calçados</option><option value="outros">Outros</option></select>
+                    <select id="item-size" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" required><option value="" disabled selected>Tamanho</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option></select>
+                </div>
+                 <select id="item-condition" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" required><option value="" disabled selected>Condição da Peça</option><option value="novo">Nova (com etiqueta)</option><option value="pouco_usado">Pouco usada</option><option value="usado">Usada</option></select>
+                <button type="submit" id="add-item-submit-btn" class="w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-600 transition-all duration-300 shadow-sm">Adicionar Peça</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="my-requests-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+         <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-8 relative">
+            <button id="close-requests-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Pedidos de Doação</h2>
+            <div id="my-requests-list" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar"></div>
+            <p id="no-requests-message" class="text-center text-gray-500 mt-6 hidden">Você ainda não demonstrou interesse em nenhuma peça.</p>
+        </div>
+    </div>
+    
+    <div id="notifications-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 relative">
+            <button id="close-notifications-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Minhas Notificações</h2>
+            <div id="notifications-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar"></div>
+            <p id="no-notifications-message" class="text-center text-gray-500 mt-6 hidden">Você não tem nenhuma notificação.</p>
+        </div>
+    </div>
+    
+    <div id="chat-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+         <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg h-[80vh] p-6 relative flex flex-col">
+            <button id="close-chat-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <h2 id="chat-title" class="text-xl font-bold text-gray-800 mb-4 pb-4 border-b">Chat</h2>
+            <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-2 custom-scrollbar"></div>
+            <form id="chat-form" class="mt-4 flex gap-2">
+                <input type="text" id="chat-message-input" placeholder="Digite sua mensagem..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+                <button type="submit" class="bg-indigo-500 text-white font-semibold p-3 rounded-lg hover:bg-indigo-600 transition-all shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="review-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 relative">
+            <button id="close-review-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <h2 id="review-modal-title" class="text-2xl font-bold text-gray-800 mb-6">Deixar Avaliação</h2>
+            <form id="review-form" class="space-y-4">
+                <div class="flex justify-center text-4xl text-gray-300" id="star-rating">
+                    <span data-value="1" class="cursor-pointer hover:text-yellow-400">★</span>
+                    <span data-value="2" class="cursor-pointer hover:text-yellow-400">★</span>
+                    <span data-value="3" class="cursor-pointer hover:text-yellow-400">★</span>
+                    <span data-value="4" class="cursor-pointer hover:text-yellow-400">★</span>
+                    <span data-value="5" class="cursor-pointer hover:text-yellow-400">★</span>
+                </div>
+                 <textarea id="review-comment" placeholder="Deixe um comentário sobre a sua experiência..." rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required></textarea>
+                <button type="submit" class="w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-600 transition-all duration-300 shadow-sm">Enviar Avaliação</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Nosso JavaScript (lógica do app) -->
+    <script src="script.js" type="module"></script>
+</body>
 </html>
